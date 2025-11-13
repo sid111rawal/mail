@@ -26,11 +26,35 @@ class Database:
             db_password = os.getenv('DB_PASSWORD', 'postgres')
             self.db_url = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
         
-        self.init_db()
+        # Try to initialize DB, but don't crash if connection fails
+        try:
+            self.init_db()
+        except Exception as e:
+            print(f"Warning: Could not connect to database on startup: {e}")
+            print(f"Database URL being used: {self.db_url.replace(self.db_url.split('@')[0].split('//')[1].split(':')[1] if '@' in self.db_url else '', '***')}")
+            # Will retry on first actual database operation
     
     def get_connection(self):
         """Get database connection."""
-        return psycopg2.connect(self.db_url)
+        try:
+            return psycopg2.connect(self.db_url)
+        except psycopg2.OperationalError as e:
+            print(f"Database connection error: {e}")
+            print(f"Attempted connection string: {self._mask_password(self.db_url)}")
+            raise
+        except Exception as e:
+            print(f"Unexpected database error: {e}")
+            raise
+    
+    def _mask_password(self, url: str) -> str:
+        """Mask password in connection string for logging."""
+        if '@' in url:
+            parts = url.split('@')
+            user_pass = parts[0].split('//')[1] if '//' in parts[0] else parts[0]
+            if ':' in user_pass:
+                user = user_pass.split(':')[0]
+                return url.replace(user_pass, f"{user}:***")
+        return url
     
     def init_db(self):
         """Initialize database tables."""
