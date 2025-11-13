@@ -1,0 +1,11 @@
+name,email,company,phone,status,notes
+John Doe,john.doe@example.com,Example Corp,+1-555-0123,active,Premium client
+Jane Smith,jane.smith@testcompany.com,Test Company,+1-555-0124,active,New client onboarded last month
+Mike Johnson,mike.j@startup.io,Startup Inc,+1-555-0125,active,Tech startup focus
+Sarah Wilson,sarah@consulting.com,Wilson Consulting,+1-555-0126,active,Long-term partner
+David Brown,david.brown@enterprise.com,Enterprise Solutions,+1-555-0127,active,Enterprise client
+Lisa Garcia,lisa@creative.agency,Creative Agency,+1-555-0128,pending,Waiting for contract signature
+Tom Anderson,t.anderson@manufacturing.com,Anderson Manufacturing,+1-555-0129,active,Industrial client
+Emily Davis,emily.davis@nonprofit.org,Community Nonprofit,+1-555-0130,active,Special pricing
+Robert Taylor,robert@freelancer.com,Taylor Freelancing,+1-555-0131,active,Individual contractor
+Jennifer White,jennifer.white@law.firm,White & Associates,+1-555-0132,active,Legal services client

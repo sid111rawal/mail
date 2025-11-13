@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Review Transfer - Interac e-Transfer{% endblock %}
+
+{% block content %}
+<div class="interac-screen">
+    <div class="content-wrapper">
+        <div class="header">
+            <a href="{{ url_for('enter_details', contact_id=contact.id) }}" class="icon">←</a>
+            <span class="title">Send <em>Interac</em> e-Transfer</span>
+        </div>
+
+        <div class="review-section">
+            <h1 class="page-title">Review your transfer</h1>
+
+            <div class="autodeposit-box">
+                <strong>{{ contact.name.upper() }}</strong> is registered for Interac e-Transfer® Autodeposit.<br>
+                Your transfer will be automatically deposited into their bank account – no security question and answer needed.
+            </div>
+
+            <div class="transfer-details-card">
+                <div class="detail-row">
+                    <div class="detail-label">From</div>
+                    <div class="detail-value">Chequing *** 3982</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">To</div>
+                    <div class="detail-value">
+                        <div>{{ contact.name }}</div>
+                        <div class="email">{{ contact.email }}</div>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Amount</div>
+                    <div class="detail-value">{{ amount }}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Date</div>
+                    <div class="detail-value">{{ date }}</div>
+                </div>
+            </div>
+
+            <button class="send-btn" onclick="sendTransfer()">Send</button>
+            <a href="{{ url_for('enter_details', contact_id=contact.id) }}" class="cancel-link">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function sendTransfer() {
+    const btn = document.querySelector('.send-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    
+    fetch('{{ url_for("create_transfer") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = '{{ url_for("transfer_success") }}';
+        } else {
+            alert('Error: ' + (data.error || 'Failed to send transfer'));
+            btn.disabled = false;
+            btn.textContent = 'Send';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Send';
+    });
+}
+</script>
+{% endblock %}
+

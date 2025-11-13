@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Enter Details - Interac e-Transfer{% endblock %}
+
+{% block content %}
+<div class="interac-screen">
+    <div class="content-wrapper">
+        <div class="header">
+            <a href="{{ url_for('select_contact') }}" class="icon">←</a>
+            <span class="title">Send <em>Interac</em> e-Transfer</span>
+            <span class="icon">⋯</span>
+        </div>
+
+        <div class="form-section">
+            <div class="form-field">
+                <label>From</label>
+                <div class="field-value">
+                    <div>
+                        <div>Chequing *** 3982</div>
+                        <div class="balance">{{ formatted_balance }}</div>
+                    </div>
+                    <span class="chevron">▼</span>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>To</label>
+                <div class="field-value">
+                    <div>
+                        <div>{{ contact.name }}</div>
+                        <div class="email">{{ contact.email }}</div>
+                    </div>
+                    <span class="chevron">▼</span>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Amount</label>
+                <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" class="amount-input" required>
+            </div>
+
+            <div class="form-field">
+                <label>Date</label>
+                <div class="field-value">
+                    <input type="date" id="date" value="{{ date_today }}" required>
+                    <span class="chevron">▼</span>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Personal message (optional)</label>
+                <textarea id="message" rows="3" placeholder="Add a personal message"></textarea>
+            </div>
+
+            <div class="info-link">
+                <a href="#" onclick="alert('Interac e-Transfer Limits placeholder')">Interac e-Transfer Limits</a>
+            </div>
+
+            <button class="continue-btn" onclick="proceedToReview()">Continue</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function proceedToReview() {
+    const amount = document.getElementById('amount').value;
+    const date = document.getElementById('date').value;
+    const message = document.getElementById('message').value;
+    
+    if (!amount || parseFloat(amount) <= 0) {
+        alert('Please enter a valid amount');
+        return;
+    }
+    
+    if (!date) {
+        alert('Please select a date');
+        return;
+    }
+    
+    // Format date for display
+    const dateObj = new Date(date);
+    const formattedDate = dateObj.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    
+    window.location.href = `{{ url_for('review_transfer') }}?amount=${amount}&date=${formattedDate}&message=${encodeURIComponent(message)}`;
+}
+</script>
+{% endblock %}
+

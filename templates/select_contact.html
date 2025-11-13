@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Select Contact - Interac e-Transfer{% endblock %}
+
+{% block content %}
+<div class="interac-screen">
+    <!-- Background Content -->
+    <div class="background-content">
+        <div class="header">
+            <a href="{{ url_for('index') }}" class="icon">✕</a>
+            <span class="title">Send <em>Interac</em> e-Transfer</span>
+            <span class="icon">⋯</span>
+        </div>
+        <div class="from-account">
+            <div>
+                <span class="label">From</span>
+                <div class="account-info">
+                    <span>Chequing *** 3982</span>
+                    <span class="balance">{{ formatted_balance }}</span>
+                </div>
+            </div>
+            <span class="chevron">▼</span>
+        </div>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay">
+        <div class="modal-header">
+            <a href="{{ url_for('index') }}" class="cancel-btn">Cancel</a>
+            <span class="title">Contacts</span>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search" value="{{ search }}" onkeyup="searchContacts()">
+        </div>
+        <a href="{{ url_for('add_contact_page') }}" class="add-contact-btn">
+            <div class="plus-icon">+</div>
+            <span>Add contact</span>
+        </a>
+        <div class="contact-list" id="contact-list">
+            {% for contact in contacts %}
+            <a href="{{ url_for('enter_details', contact_id=contact.id) }}" class="contact-item">
+                <div class="name">{{ contact.name }}</div>
+                <div class="email">{{ contact.email }}</div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+function searchContacts() {
+    const search = document.getElementById('search-input').value;
+    window.location.href = '{{ url_for("select_contact") }}?search=' + encodeURIComponent(search);
+}
+</script>
+{% endblock %}
+

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Add Contact{% endblock %}
+
+{% block content %}
+<div class="interac-screen">
+    <div class="content-wrapper">
+        <div class="header">
+            <a href="{{ url_for('select_contact') }}" class="icon">←</a>
+            <span class="title">Add contact</span>
+            <span class="icon"></span>
+        </div>
+
+        <div class="form-section" style="margin-top: 20px;">
+            <div class="form-field">
+                <label>Name</label>
+                <input type="text" id="name" placeholder="Enter a name" required>
+            </div>
+
+            <div class="form-field">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="Enter an email address" required>
+            </div>
+
+            <div class="form-field">
+                <label>Preferred language</label>
+                <div class="field-value">
+                    <select id="language" class="language-select">
+                        <option value="English" selected>English</option>
+                        <option value="French">French</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="German">German</option>
+                        <option value="Italian">Italian</option>
+                    </select>
+                    <span class="chevron">▼</span>
+                </div>
+            </div>
+
+            <button class="submit-contact-btn" onclick="addContact()">Add Contact</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function addContact() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    
+    if (!name) {
+        alert('Please enter a name');
+        return;
+    }
+    
+    if (!email) {
+        alert('Please enter an email address');
+        return;
+    }
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address');
+        return;
+    }
+    
+    const btn = document.querySelector('.submit-contact-btn');
+    btn.disabled = true;
+    btn.textContent = 'Adding...';
+    
+    fetch('{{ url_for("add_contact_api") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Contact added successfully!');
+            window.location.href = '{{ url_for("select_contact") }}';
+        } else {
+            alert('Error: ' + (data.error || 'Failed to add contact'));
+            btn.disabled = false;
+            btn.textContent = 'Add Contact';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Add Contact';
+    });
+}
+
+// Allow Enter key to submit
+document.getElementById('email').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        addContact();
+    }
+});
+</script>
+{% endblock %}
+

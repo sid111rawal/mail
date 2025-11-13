@@ -1,0 +1,8 @@
+# Flask web framework
+Flask>=2.3.0
+
+# PostgreSQL database
+psycopg2-binary>=2.9.0
+
+# Environment variables
+python-dotenv>=1.0.0

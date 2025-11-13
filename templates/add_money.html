@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Add Money{% endblock %}
+
+{% block content %}
+<div class="interac-screen">
+    <div class="content-wrapper">
+        <div class="header">
+            <a href="{{ url_for('index') }}" class="icon">←</a>
+            <span class="title">Add Money</span>
+            <span class="icon"></span>
+        </div>
+
+        <div class="form-section" style="margin-top: 40px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">💰</div>
+                <h2 style="font-size: 24px; font-weight: 600; color: #333; margin-bottom: 8px;">Deposit Money</h2>
+                <p style="color: #666; font-size: 15px;">Transfer money from your linked account</p>
+            </div>
+
+            <div class="form-field">
+                <label>From Account</label>
+                <div class="field-value">
+                    <div>
+                        <div>Savings *** 3321</div>
+                        <div class="balance">Available: $10,000.00</div>
+                    </div>
+                    <span class="chevron">▼</span>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>To Account</label>
+                <div class="field-value">
+                    <div>
+                        <div>Chequing *** 3982</div>
+                        <div class="balance">Current Balance: {{ formatted_balance }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Amount</label>
+                <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" class="amount-input" required>
+            </div>
+
+            <div class="info-box" style="background: #f5f5f5; padding: 16px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #333;">
+                <div style="font-size: 14px; line-height: 1.5; color: #333;">
+                    <strong>Note:</strong> The deposit will appear in your transaction history as "Deposit from *** 3321 account" and will be processed immediately.
+                </div>
+            </div>
+
+            <button class="continue-btn" onclick="addMoney()">Add Money</button>
+            <a href="{{ url_for('index') }}" class="cancel-link" style="display: block; text-align: center; margin-top: 12px;">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function addMoney() {
+    const amount = parseFloat(document.getElementById('amount').value);
+    
+    if (!amount || amount <= 0) {
+        alert('Please enter a valid amount');
+        return;
+    }
+    
+    const btn = document.querySelector('.continue-btn');
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+    
+    fetch('{{ url_for("add_money_api") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount: amount })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Money added successfully! New balance: ' + data.formatted_balance);
+            window.location.href = '{{ url_for("index") }}';
+        } else {
+            alert('Error: ' + (data.error || 'Failed to add money'));
+            btn.disabled = false;
+            btn.textContent = 'Add Money';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Add Money';
+    });
+}
+</script>
+{% endblock %}
+

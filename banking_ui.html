@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chequing Account</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 20px 16px 30px;
+            position: relative;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            opacity: 0.9;
+        }
+
+        .account-title {
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+        }
+
+        .balance-section {
+            text-align: center;
+        }
+
+        .balance-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .balance-amount {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .account-number {
+            font-size: 14px;
+            opacity: 0.85;
+            letter-spacing: 1px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            background: white;
+            padding: 24px 16px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 8px;
+            border: 2px solid #ff6b35;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .action-btn:hover {
+            background: #fff5f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+        }
+
+        .action-btn:active {
+            transform: translateY(0);
+        }
+
+        .action-icon {
+            width: 32px;
+            height: 32px;
+            border: 2px solid #ff6b35;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            background: white;
+        }
+
+        .action-label {
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            color: #333;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            margin-top: 8px;
+            min-height: calc(100vh - 400px);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+            background: white;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            color: #ff6b35;
+            border-bottom-color: #ff6b35;
+        }
+
+        /* Transactions */
+        .transactions-container {
+            padding: 0 16px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .chevron {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s;
+        }
+
+        .chevron.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .info-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.6;
+        }
+
+        .transaction-list {
+            display: none;
+        }
+
+        .transaction-list.expanded {
+            display: block;
+        }
+
+        .transaction-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-date {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .transaction-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .transaction-left {
+            flex: 1;
+        }
+
+        .transaction-description {
+            font-size: 15px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .transaction-category {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .transaction-amount {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .transaction-amount.positive {
+            color: #4caf50;
+        }
+
+        .transaction-balance {
+            font-size: 13px;
+            color: #999;
+            text-align: right;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .balance-amount {
+                font-size: 36px;
+            }
+
+            .action-buttons {
+                gap: 12px;
+                padding: 20px 12px;
+            }
+
+            .action-btn {
+                padding: 12px 6px;
+            }
+
+            .action-label {
+                font-size: 11px;
+            }
+        }
+
+        /* Placeholder styles */
+        .placeholder {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="nav-bar">
+            <div class="nav-icon" onclick="alert('Back button placeholder')">←</div>
+            <div class="account-title">Chequing</div>
+            <div class="nav-icon" onclick="alert('Menu button placeholder')">⋯</div>
+        </div>
+        <div class="balance-section">
+            <div class="balance-label">Available Balance</div>
+            <div class="balance-amount">$5,299.34</div>
+            <div class="account-number">***3982</div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <div class="action-btn placeholder" onclick="alert('Transfer Money placeholder')">
+            <div class="action-icon">⇄</div>
+            <div class="action-label">Transfer Money</div>
+        </div>
+        <div class="action-btn placeholder" onclick="alert('Interac e-Transfer placeholder')">
+            <div class="action-icon">✈</div>
+            <div class="action-label">Interac e-Transfer</div>
+        </div>
+        <div class="action-btn placeholder" onclick="alert('Pay Bills placeholder')">
+            <div class="action-icon">📄</div>
+            <div class="action-label">Pay Bills</div>
+        </div>
+        <div class="action-btn placeholder" onclick="alert('Deposit Cheques placeholder')">
+            <div class="action-icon">📷</div>
+            <div class="action-label">Deposit Cheques</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('transactions')">Transactions</div>
+            <div class="tab" onclick="switchTab('details')">Details</div>
+        </div>
+
+        <!-- Transactions Tab Content -->
+        <div id="transactions-content" class="transactions-container">
+            <!-- Pending Transactions -->
+            <div class="section-header">
+                <span>PENDING TRANSACTIONS</span>
+                <div class="section-toggle" onclick="toggleSection('pending')">
+                    <span class="info-icon">ℹ</span>
+                    <span class="chevron collapsed" id="pending-chevron">▼</span>
+                </div>
+            </div>
+            <div id="pending-transactions" class="transaction-list">
+                <!-- Pending transactions would go here -->
+            </div>
+
+            <!-- Posted Transactions -->
+            <div class="section-header">
+                <span>POSTED TRANSACTIONS</span>
+                <div class="section-toggle" onclick="toggleSection('posted')">
+                    <span class="chevron" id="posted-chevron">▼</span>
+                </div>
+            </div>
+            <div id="posted-transactions" class="transaction-list expanded">
+                <!-- November 08, 2025 -->
+                <div class="transaction-item">
+                    <div class="transaction-date">NOVEMBER 08, 2025</div>
+                    <div class="transaction-main">
+                        <div class="transaction-left">
+                            <div class="transaction-description">INTERAC e-Transfer To: Stylo</div>
+                            <div class="transaction-category">Uncategorized</div>
+                        </div>
+                        <div class="transaction-right">
+                            <div class="transaction-amount">$1,650.00</div>
+                        </div>
+                    </div>
+                    <div class="transaction-balance">Balance: $5,299.34</div>
+                </div>
+
+                <!-- October 31, 2025 -->
+                <div class="transaction-item">
+                    <div class="transaction-date">OCTOBER 31, 2025</div>
+                    <div class="transaction-main">
+                        <div class="transaction-left">
+                            <div class="transaction-description">Interest Paid</div>
+                            <div class="transaction-category">Interest & Capital Income</div>
+                        </div>
+                        <div class="transaction-right">
+                            <div class="transaction-amount positive">+ $0.08</div>
+                        </div>
+                    </div>
+                    <div class="transaction-balance">Balance: $6,949.34</div>
+                </div>
+
+                <!-- October 28, 2025 -->
+                <div class="transaction-item">
+                    <div class="transaction-date">OCTOBER 28, 2025</div>
+                    <div class="transaction-main">
+                        <div class="transaction-left">
+                            <div class="transaction-description">INTERAC e-Transfer To: Stylo</div>
+                            <div class="transaction-category">Uncategorized</div>
+                        </div>
+                        <div class="transaction-right">
+                            <div class="transaction-amount">$1,500.00</div>
+                        </div>
+                    </div>
+                    <div class="transaction-balance">Balance: $6,949.26</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Tab Content -->
+        <div id="details-content" class="transactions-container" style="display: none;">
+            <div style="padding: 24px 16px; text-align: center; color: #999;">
+                <p>Details placeholder</p>
+                <p style="margin-top: 8px; font-size: 14px;">Account details and information would appear here.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Update tab appearance
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Show/hide content
+            if (tabName === 'transactions') {
+                document.getElementById('transactions-content').style.display = 'block';
+                document.getElementById('details-content').style.display = 'none';
+            } else {
+                document.getElementById('transactions-content').style.display = 'none';
+                document.getElementById('details-content').style.display = 'block';
+            }
+        }
+
+        function toggleSection(sectionName) {
+            const section = document.getElementById(sectionName + '-transactions');
+            const chevron = document.getElementById(sectionName + '-chevron');
+            
+            if (section.classList.contains('expanded')) {
+                section.classList.remove('expanded');
+                chevron.classList.add('collapsed');
+            } else {
+                section.classList.add('expanded');
+                chevron.classList.remove('collapsed');
+            }
+        }
+
+        // Initialize - make sure posted transactions are expanded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Posted transactions should be expanded by default
+            const postedSection = document.getElementById('posted-transactions');
+            if (!postedSection.classList.contains('expanded')) {
+                postedSection.classList.add('expanded');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "sender": {
+    "name": "Your Name",
+    "email": "sidrawal1200@gmail.com",
+    "password": "your_app_password_here"
+  },
+  "smtp": {
+    "server": "smtp.gmail.com",
+    "port": 587,
+    "use_tls": true
+  },
+  "settings": {
+    "batch_size": 50,
+    "delay_between_emails": 1,
+    "max_retries": 3
+  }
+}

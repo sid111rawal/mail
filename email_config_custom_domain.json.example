@@ -1,0 +1,26 @@
+{
+  "_comment": "Configuration for custom domain email (e.g., your-domain.com)",
+  "sender": {
+    "name": "Your Name",
+    "email": "yourname@your-domain.com",
+    "password": "your_email_password"
+  },
+  "smtp": {
+    "server": "smtp.your-domain.com",
+    "port": 587,
+    "use_tls": true,
+    "_comment_ports": "Common ports: 25 (unsecured), 587 (TLS), 465 (SSL)",
+    "_comment_servers": "Common servers: smtp.your-domain.com, mail.your-domain.com"
+  },
+  "settings": {
+    "batch_size": 50,
+    "delay_between_emails": 1,
+    "max_retries": 3
+  },
+  "_setup_notes": {
+    "cPanel": "Use SMTP settings from your cPanel email accounts",
+    "Office365": "Server: smtp.office365.com, Port: 587, TLS: true",
+    "Google_Workspace": "Server: smtp.gmail.com, Port: 587, TLS: true (use app password)",
+    "AWS_SES": "Server: email-smtp.region.amazonaws.com, Port: 587, TLS: true"
+  }
+}

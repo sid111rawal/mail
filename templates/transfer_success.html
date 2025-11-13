@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Transfer Successful{% endblock %}
+
+{% block extra_css %}
+<style>
+    .success-screen {
+        background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        color: white;
+    }
+    
+    .success-icon {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .success-icon::before {
+        content: '✓';
+        font-size: 60px;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .success-title {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        text-align: center;
+    }
+    
+    .success-message {
+        font-size: 16px;
+        text-align: center;
+        opacity: 0.95;
+        margin-bottom: 50px;
+        max-width: 300px;
+    }
+    
+    .success-buttons {
+        width: 100%;
+        max-width: 350px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .done-btn {
+        background: white;
+        color: #ff6b35;
+        border: none;
+        padding: 16px;
+        border-radius: 12px;
+        font-size: 17px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+    }
+    
+    .another-transfer-btn {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+        padding: 16px;
+        border-radius: 12px;
+        font-size: 17px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="success-screen">
+    <div class="success-icon"></div>
+    <h1 class="success-title">All set!</h1>
+    <p class="success-message">
+        You'll get an email when the transfer is completed. It may take up to 30 min.
+    </p>
+    <div class="success-buttons">
+        <a href="{{ url_for('index') }}" class="done-btn" onclick="window.location.reload()">Done</a>
+        <a href="{{ url_for('select_contact') }}" class="another-transfer-btn">Do Another Transfer</a>
+    </div>
+</div>
+{% endblock %}
+
