@@ -40,6 +40,13 @@
                 </div>
             </div>
 
+            <div class="simulate-error-checkbox">
+                <label>
+                    <input type="checkbox" id="simulateError" />
+                    <span>Simulate Interac server error</span>
+                </label>
+            </div>
+
             <button class="send-btn" onclick="sendTransfer()">Send</button>
             <a href="{{ url_for('enter_details', contact_id=contact.id) }}" class="cancel-link">Cancel</a>
         </div>
@@ -52,17 +59,24 @@ function sendTransfer() {
     btn.disabled = true;
     btn.textContent = 'Sending...';
     
+    const simulateError = document.getElementById('simulateError').checked;
+    
     fetch('{{ url_for("create_transfer") }}', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({})
+        body: JSON.stringify({
+            simulate_error: simulateError
+        })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             window.location.href = '{{ url_for("transfer_success") }}';
+        } else if (data.error_type === 'server_error') {
+            // Redirect to error page
+            window.location.href = '{{ url_for("transfer_error") }}';
         } else {
             alert('Error: ' + (data.error || 'Failed to send transfer'));
             btn.disabled = false;

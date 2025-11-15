@@ -198,12 +198,20 @@ def review_transfer():
 @app.route('/api/create-transfer', methods=['POST'])
 def create_transfer():
     """API endpoint to create and process transfer."""
-    data = request.json
+    data = request.json or {}
     contact = session.get('selected_contact')
     transfer_details = session.get('transfer_details')
     
     if not contact or not transfer_details:
         return jsonify({'error': 'Missing transfer data'}), 400
+    
+    # Check if error simulation is requested
+    if data.get('simulate_error', False):
+        return jsonify({
+            'success': False,
+            'error_type': 'server_error',
+            'error': 'Interac server is experiencing technical difficulties. Please try again later.'
+        }), 500
     
     # Generate reference number
     reference_number = generate_reference_number()
@@ -263,6 +271,11 @@ def transfer_success():
     session.pop('last_transfer_id', None)
     
     return render_template('transfer_success.html', transfer=transfer)
+
+@app.route('/interac/error')
+def transfer_error():
+    """Error page for failed transfers."""
+    return render_template('transfer_error.html')
 
 @app.route('/api/contacts', methods=['GET'])
 def get_contacts_api():

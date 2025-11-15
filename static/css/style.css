@@ -650,6 +650,30 @@ body {
     cursor: not-allowed;
 }
 
+.simulate-error-checkbox {
+    margin: 20px 0;
+    padding: 12px;
+    background: #fff3e0;
+    border-radius: 8px;
+    border: 1px solid #ffcc80;
+}
+
+.simulate-error-checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+}
+
+.simulate-error-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #ff6b35;
+}
+
 .cancel-link {
     display: block;
     text-align: center;
