@@ -359,7 +359,7 @@ def send_transfer_email(transfer: dict):
     # Plain text fallback
     body = f"""Hi {email_data['recipient_name']},
 
-Your funds have been automatically deposited into your account at {email_data['bank_name']}.
+Your funds have been automatically deposited into your account.
 
 Amount: {email_data['amount']}
 Date: {email_data['transfer_date']}
