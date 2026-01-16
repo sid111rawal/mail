@@ -11,7 +11,9 @@
             <div class="account-title">Chequing</div>
             <div class="nav-icon menu-icon" onclick="toggleMenu()">⋯</div>
             <div class="menu-dropdown" id="menuDropdown">
-                <!-- Menu items removed as per request -->
+                <a href="{{ url_for('add_money_page') }}" class="menu-item">
+                    <span>💰</span> Add Money
+                </a>
             </div>
         </div>
         <div class="balance-section">
