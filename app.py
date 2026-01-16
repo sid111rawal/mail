@@ -190,6 +190,7 @@ def review_transfer():
     return render_template('review_transfer.html', 
                          contact=contact,
                          amount=format_amount(float(amount)),
+                         raw_amount=amount,
                          date=date,
                          message=message,
                          balance=balance,

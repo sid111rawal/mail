@@ -36,7 +36,8 @@
 
             <div class="form-field">
                 <label>Amount</label>
-                <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" class="amount-input" required>
+                <input type="text" id="amount" placeholder="0.00" class="amount-input"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
             </div>
 
             <div class="form-field">
@@ -62,31 +63,30 @@
 </div>
 
 <script>
-function proceedToReview() {
-    const amount = document.getElementById('amount').value;
-    const date = document.getElementById('date').value;
-    const message = document.getElementById('message').value;
-    
-    if (!amount || parseFloat(amount) <= 0) {
-        alert('Please enter a valid amount');
-        return;
+    function proceedToReview() {
+        const amount = document.getElementById('amount').value;
+        const date = document.getElementById('date').value;
+        const message = document.getElementById('message').value;
+
+        if (!amount || parseFloat(amount) <= 0) {
+            alert('Please enter a valid amount');
+            return;
+        }
+
+        if (!date) {
+            alert('Please select a date');
+            return;
+        }
+
+        // Format date for display
+        const dateObj = new Date(date);
+        const formattedDate = dateObj.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        window.location.href = `{{ url_for('review_transfer') }}?amount=${amount}&date=${formattedDate}&message=${encodeURIComponent(message)}`;
     }
-    
-    if (!date) {
-        alert('Please select a date');
-        return;
-    }
-    
-    // Format date for display
-    const dateObj = new Date(date);
-    const formattedDate = dateObj.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-    });
-    
-    window.location.href = `{{ url_for('review_transfer') }}?amount=${amount}&date=${formattedDate}&message=${encodeURIComponent(message)}`;
-}
 </script>
 {% endblock %}
-

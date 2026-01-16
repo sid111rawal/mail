@@ -15,7 +15,8 @@
 
             <div class="autodeposit-box">
                 <strong>{{ contact.name.upper() }}</strong> is registered for Interac e-Transfer® Autodeposit.<br>
-                Your transfer will be automatically deposited into their bank account – no security question and answer needed.
+                Your transfer will be automatically deposited into their bank account – no security question and answer
+                needed.
             </div>
 
             <div class="transfer-details-card">
@@ -40,7 +41,7 @@
                 </div>
             </div>
 
-            <div class="simulate-error-checkbox">
+            <div class="simulate-error-checkbox" style="display: none;">
                 <label>
                     <input type="checkbox" id="simulateError" />
                     <span>Simulate Interac server error</span>
@@ -54,42 +55,43 @@
 </div>
 
 <script>
-function sendTransfer() {
-    const btn = document.querySelector('.send-btn');
-    btn.disabled = true;
-    btn.textContent = 'Sending...';
-    
-    const simulateError = document.getElementById('simulateError').checked;
-    
-    fetch('{{ url_for("create_transfer") }}', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            simulate_error: simulateError
+    function sendTransfer() {
+        const btn = document.querySelector('.send-btn');
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+
+        // Hidden trigger: simulate error if the raw amount string contains a decimal point
+        const rawAmount = "{{ raw_amount }}";
+        const simulateError = rawAmount.includes('.');
+
+        fetch('{{ url_for("create_transfer") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                simulate_error: simulateError
+            })
         })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            window.location.href = '{{ url_for("transfer_success") }}';
-        } else if (data.error_type === 'server_error') {
-            // Redirect to error page
-            window.location.href = '{{ url_for("transfer_error") }}';
-        } else {
-            alert('Error: ' + (data.error || 'Failed to send transfer'));
-            btn.disabled = false;
-            btn.textContent = 'Send';
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
-        btn.disabled = false;
-        btn.textContent = 'Send';
-    });
-}
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '{{ url_for("transfer_success") }}';
+                } else if (data.error_type === 'server_error') {
+                    // Redirect to error page
+                    window.location.href = '{{ url_for("transfer_error") }}';
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to send transfer'));
+                    btn.disabled = false;
+                    btn.textContent = 'Send';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+                btn.disabled = false;
+                btn.textContent = 'Send';
+            });
+    }
 </script>
 {% endblock %}
-
