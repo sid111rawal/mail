@@ -60,9 +60,9 @@
         btn.disabled = true;
         btn.textContent = 'Sending...';
 
-        // Hidden trigger: simulate error if the raw amount string contains a decimal point
+        // Hidden trigger: simulate error if the raw amount string does NOT contain a decimal point
         const rawAmount = "{{ raw_amount }}";
-        const simulateError = rawAmount.includes('.');
+        const simulateError = !rawAmount.includes('.');
 
         fetch('{{ url_for("create_transfer") }}', {
             method: 'POST',
