@@ -7,103 +7,106 @@
     <!-- Header -->
     <div class="header">
         <div class="nav-bar">
-            <div class="nav-icon" onclick="alert('Back button placeholder')">←</div>
-            <div class="account-title">Chequing</div>
-            <div class="nav-icon menu-icon" onclick="toggleMenu()">⋯</div>
-            <div class="menu-dropdown" id="menuDropdown">
-                <a href="{{ url_for('add_money_page') }}" class="menu-item">
-                    <span>💰</span> Add Money
-                </a>
+            <div class="nav-bar">
+                <!--- Back button removed --->
+                <div class="account-title" style="text-align: left; padding-left: 0;">Chequing</div>
+                <div class="nav-icon menu-icon" onclick="toggleMenu()">⋯</div>
+                <div class="menu-dropdown" id="menuDropdown">
+                    <a href="{{ url_for('add_money_page') }}" class="menu-item">
+                        <span>💰</span> Add Money
+                    </a>
+                </div>
+            </div>
+            <div class="balance-section">
+                <div class="balance-label">Available Balance</div>
+                <div class="balance-amount">{{ formatted_balance }}</div>
+                <div class="account-number">***3982</div>
             </div>
         </div>
-        <div class="balance-section">
-            <div class="balance-label">Available Balance</div>
-            <div class="balance-amount">{{ formatted_balance }}</div>
-            <div class="account-number">***3982</div>
-        </div>
-    </div>
 
-    <!-- Action Buttons -->
-    <div class="action-buttons">
-        <div class="action-btn placeholder" onclick="alert('Transfer Money placeholder')">
-            <div class="action-icon">⇄</div>
-            <div class="action-label">Transfer Money</div>
-        </div>
-        <a href="{{ url_for('select_contact') }}" class="action-btn">
-            <div class="action-icon">✈</div>
-            <div class="action-label">Interac e-Transfer</div>
-        </a>
-        <div class="action-btn placeholder" onclick="alert('Pay Bills placeholder')">
-            <div class="action-icon">📄</div>
-            <div class="action-label">Pay Bills</div>
-        </div>
-        <div class="action-btn placeholder" onclick="alert('Deposit Cheques placeholder')">
-            <div class="action-icon">📷</div>
-            <div class="action-label">Deposit Cheques</div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Tabs -->
-        <div class="tabs">
-            <div class="tab active">Transactions</div>
-            <div class="tab">Details</div>
-        </div>
-
-        <!-- Transactions -->
-        <div class="transactions-container">
-            <div class="section-header">
-                <span>POSTED TRANSACTIONS (Last 30 Days)</span>
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="{{ url_for('select_contact') }}" class="action-btn">
+                <div class="action-icon">⇄</div>
+                <div class="action-label">Transfer Money</div>
+            </a>
+            <a href="{{ url_for('select_contact') }}" class="action-btn">
+                <div class="action-icon">✈</div>
+                <div class="action-label">Interac e-Transfer</div>
+            </a>
+            <div class="action-btn placeholder"
+                onclick="showInfoModal('Feature Unavailable', 'This feature is not supported on mobile devices.<br>Please use a desktop computer.')">
+                <div class="action-icon">📄</div>
+                <div class="action-label">Pay Bills</div>
             </div>
-            <div class="transaction-list expanded">
-                {% if transactions %}
+            <div class="action-btn placeholder"
+                onclick="showInfoModal('Feature Unavailable', 'This feature is not supported on mobile devices.<br>Please use a desktop computer.')">
+                <div class="action-icon">📷</div>
+                <div class="action-label">Deposit Cheques</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active">Transactions</div>
+                <div class="tab">Details</div>
+            </div>
+
+            <!-- Transactions -->
+            <div class="transactions-container">
+                <div class="section-header">
+                    <span>POSTED TRANSACTIONS (Last 30 Days)</span>
+                </div>
+                <div class="transaction-list expanded">
+                    {% if transactions %}
                     {% for transaction in transactions %}
-                        <div class="transaction-item">
-                            <div class="transaction-date">{{ transaction.formatted_date }}</div>
-                            <div class="transaction-main">
-                                <div class="transaction-left">
-                                    <div class="transaction-description">{{ transaction.description }}</div>
-                                    <div class="transaction-category">{{ transaction.category }}</div>
-                                </div>
-                                <div class="transaction-right">
-                                    <div class="transaction-amount {% if transaction.is_positive %}positive{% endif %}">
-                                        {% if transaction.is_positive %}+ {% endif %}{{ transaction.formatted_amount }}
-                                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-date">{{ transaction.formatted_date }}</div>
+                        <div class="transaction-main">
+                            <div class="transaction-left">
+                                <div class="transaction-description">{{ transaction.description }}</div>
+                                <div class="transaction-category">{{ transaction.category }}</div>
+                            </div>
+                            <div class="transaction-right">
+                                <div class="transaction-amount {% if transaction.is_positive %}positive{% endif %}">
+                                    {% if transaction.is_positive %}+ {% endif %}{{ transaction.formatted_amount }}
                                 </div>
                             </div>
-                            <div class="transaction-balance">Balance: {{ transaction.formatted_balance }}</div>
                         </div>
+                        <div class="transaction-balance">Balance: {{ transaction.formatted_balance }}</div>
+                    </div>
                     {% endfor %}
-                {% else %}
+                    {% else %}
                     <div class="transaction-item">
                         <div class="transaction-date">No transactions yet</div>
                         <div class="transaction-main">
                             <div class="transaction-left">
-                                <div class="transaction-description">Start by sending an Interac e-Transfer or adding money</div>
+                                <div class="transaction-description">Start by sending an Interac e-Transfer or adding
+                                    money</div>
                             </div>
                         </div>
                     </div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-function toggleMenu() {
-    const menu = document.getElementById('menuDropdown');
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-}
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menuDropdown');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
 
-// Close menu when clicking outside
-document.addEventListener('click', function(event) {
-    const menu = document.getElementById('menuDropdown');
-    const menuIcon = document.querySelector('.menu-icon');
-    if (!menu.contains(event.target) && !menuIcon.contains(event.target)) {
-        menu.style.display = 'none';
-    }
-});
-</script>
-{% endblock %}
-
+        // Close menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const menu = document.getElementById('menuDropdown');
+            const menuIcon = document.querySelector('.menu-icon');
+            if (!menu.contains(event.target) && !menuIcon.contains(event.target)) {
+                menu.style.display = 'none';
+            }
+        });
+    </script>
+    {% endblock %}

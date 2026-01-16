@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block extra_css %}{% endblock %}
 </head>
+
 <body>
     {% block content %}{% endblock %}
+    <div id="infoModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content-wrapper">
+            <div class="modal-header">
+                <span class="title" id="modalTitle">Information</span>
+                <a href="javascript:void(0)" class="cancel-btn" onclick="closeInfoModal()">Close</a>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage"></p>
+                <button class="continue-btn" onclick="closeInfoModal()">OK</button>
+            </div>
+        </div>
+    </div>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block extra_js %}{% endblock %}
 </body>
-</html>
 
+</html>
