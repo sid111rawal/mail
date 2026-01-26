@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ statement_month }} Statement</title>
+    <link rel="stylesheet" href="statement.css">
+</head>
+
+<body>
+    {% for page in pages %}
+    <div class="page">
+        <!-- HEADER -->
+        <header class="header clearfix">
+            <div class="header-left">
+                <h1 class="statement-title">{{ statement_month }} Statement</h1>
+                <div class="account-info">
+                    <span class="account-type">{{ account_type }}</span><span class="account-number">Account # {{ account_number }}</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="logo_eq.svg" alt="EQ Bank" class="logo">
+                <div class="date-range">{{ date_range_start }} to {{ date_range_end }}</div>
+            </div>
+        </header>
+
+        {% if page.is_first_page %}
+        <!-- CUSTOMER SECTION -->
+        <div class="customer-section">
+            <div class="customer-address">
+                <p class="customer-name">{{ customer.name }}</p>
+                <p>{{ customer.address_line1 }}</p>
+                <p>{{ customer.city_province_postal }}</p>
+            </div>
+        </div>
+
+        <!-- SUMMARY SECTION - Yellow background, full width -->
+        <div class="summary-section">
+            <div class="summary-container clearfix">
+                <!-- Left: Activity Summary -->
+                <div class="summary-left">
+                    <h2 class="section-title">Your activity summary</h2>
+                    <table class="summary-table">
+                        <tr>
+                            <td class="label">Opening balance</td>
+                            <td class="value">${{ summary.opening_balance }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Total deposits</td>
+                            <td class="value">+ ${{ summary.total_deposits }}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Total withdrawals</td>
+                            <td class="value">- ${{ summary.total_withdrawals }}</td>
+                        </tr>
+                        <tr class="closing-row">
+                            <td class="label">Closing balance</td>
+                            <td class="value closing-value">= ${{ summary.closing_balance }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- Right: Questions -->
+                <div class="summary-right">
+                    <h2 class="questions-title">Questions?</h2>
+                    <table class="contact-table">
+                        <tr>
+                            <td class="contact-label">Toll Free (within North America)</td>
+                            <td class="contact-value">{{ contact.toll_free }}</td>
+                        </tr>
+                        <tr>
+                            <td class="contact-label">Outside of North America</td>
+                            <td class="contact-value">{{ contact.international }}</td>
+                        </tr>
+                        <tr>
+                            <td class="contact-label">Chat or e-mail</td>
+                            <td class="contact-value">{{ contact.website }}</td>
+                        </tr>
+                    </table>
+                    <table class="interest-table">
+                        <tr>
+                            <td class="interest-label">Total interest earned</td>
+                            <td class="interest-value">${{ summary.interest_earned }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTIVITY SECTION - Page 1 -->
+        <div class="activity-section-page1">
+            {% else %}
+            <!-- ACTIVITY SECTION - Other pages -->
+            <div class="activity-section">
+                {% endif %}
+                <h2 class="activity-title">Activity details</h2>
+                <table class="activity-table">
+                    <thead>
+                        <tr>
+                            <th class="col-date">Date</th>
+                            <th class="col-desc">Description</th>
+                            <th class="col-withdrawal">Withdrawals</th>
+                            <th class="col-deposit">Deposits</th>
+                            <th class="col-balance">Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for txn in page.transactions %}
+                        <tr>
+                            <td class="col-date">{{ txn.date }}</td>
+                            <td class="col-desc">{{ txn.description }}</td>
+                            <td class="col-withdrawal">{% if txn.withdrawal %}-${{ txn.withdrawal }}{% endif %}</td>
+                            <td class="col-deposit">{% if txn.deposit %}${{ txn.deposit }}{% endif %}</td>
+                            <td class="col-balance"><strong>${{ txn.balance }}</strong></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer clearfix">
+                <div class="footer-left">
+                    <div>EQ Bank Tower. 2200-25 Ontario Street. Toronto, ON M5A 0Y9</div>
+                    <div>{{ footer_year }} Equitable Bank Tower. All rights reserved</div>
+                </div>
+                <div class="footer-right">
+                    Page {{ page.page_num }} of {{ total_pages }}
+                </div>
+            </footer>
+        </div>
+        {% endfor %}
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 30" width="100" height="30">
+  <rect x="0" y="3" width="24" height="24" rx="3" fill="#C8A600"/>
+  <text x="3" y="21" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="bold" fill="white">EQ</text>
+  <text x="30" y="21" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#333333">Bank</text>
+</svg>

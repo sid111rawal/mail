@@ -1,0 +1,215 @@
+{
+    "statement_month": "July 2025",
+    "account_type": "Business Account",
+    "account_number": "400-013-117",
+    "date_range_start": "July 01, 2025",
+    "date_range_end": "July 31, 2025",
+    "customer": {
+        "name": "Rawal's Investments Inc.",
+        "address_line1": "340 Jarvis St",
+        "city_province_postal": "Toronto, ON M4Y2G6"
+    },
+    "contact": {
+        "toll_free": "1-844-437-2265",
+        "international": "1-416-551-3449",
+        "website": "eqbank.ca/contact-us"
+    },
+    "summary": {
+        "opening_balance": 20432.81,
+        "total_deposits": 18574.57,
+        "total_withdrawals": 9050.61,
+        "interest_earned": 14.28,
+        "closing_balance": 29971.05
+    },
+    "transactions": [
+        {
+            "date": "Jul 02",
+            "description": "Interac e-Transfer received from Maple Leaf Consulting",
+            "withdrawal": null,
+            "deposit": 4512.67,
+            "balance": 24945.48
+        },
+        {
+            "date": "Jul 02",
+            "description": "Interac e-Transfer sent to Toronto Realty - Monthly Office Rent",
+            "withdrawal": 2847.50,
+            "deposit": null,
+            "balance": 22097.98
+        },
+        {
+            "date": "Jul 03",
+            "description": "EFT Withdrawal - Rogers Business Internet",
+            "withdrawal": 164.82,
+            "deposit": null,
+            "balance": 21933.16
+        },
+        {
+            "date": "Jul 03",
+            "description": "Interac e-Transfer received from Brampton Logistics Ltd",
+            "withdrawal": null,
+            "deposit": 1822.40,
+            "balance": 23755.56
+        },
+        {
+            "date": "Jul 05",
+            "description": "Purchase - Mississauga Office Supplies (EFT)",
+            "withdrawal": 321.14,
+            "deposit": null,
+            "balance": 23434.42
+        },
+        {
+            "date": "Jul 07",
+            "description": "Interac e-Transfer received from SIDDHARTHRAWAL",
+            "withdrawal": null,
+            "deposit": 2500.00,
+            "balance": 25934.42
+        },
+        {
+            "date": "Jul 08",
+            "description": "EFT Withdrawal - Enbridge Gas Mississauga",
+            "withdrawal": 89.23,
+            "deposit": null,
+            "balance": 25845.19
+        },
+        {
+            "date": "Jul 09",
+            "description": "Interac e-Transfer sent to Etobicoke Trade Services",
+            "withdrawal": 432.15,
+            "deposit": null,
+            "balance": 25413.04
+        },
+        {
+            "date": "Jul 10",
+            "description": "Deposit - Remote Cheque Capture (Brampton Client)",
+            "withdrawal": null,
+            "deposit": 1245.88,
+            "balance": 26658.92
+        },
+        {
+            "date": "Jul 12",
+            "description": "Interac e-Transfer received from Scarborough Tech",
+            "withdrawal": null,
+            "deposit": 842.11,
+            "balance": 27501.03
+        },
+        {
+            "date": "Jul 14",
+            "description": "EFT Withdrawal - Hydro One Toronto",
+            "withdrawal": 211.56,
+            "deposit": null,
+            "balance": 27289.47
+        },
+        {
+            "date": "Jul 15",
+            "description": "Interac e-Transfer sent to Vaughan Courier Services",
+            "withdrawal": 142.30,
+            "deposit": null,
+            "balance": 27147.17
+        },
+        {
+            "date": "Jul 17",
+            "description": "Interac e-Transfer received from Oakville Design Corp",
+            "withdrawal": null,
+            "deposit": 3124.50,
+            "balance": 30271.67
+        },
+        {
+            "date": "Jul 18",
+            "description": "Purchase - North York Print & Media (EFT)",
+            "withdrawal": 214.33,
+            "deposit": null,
+            "balance": 30057.34
+        },
+        {
+            "date": "Jul 20",
+            "description": "Interac e-Transfer sent to Brampton Fleet Maintenance",
+            "withdrawal": 675.40,
+            "deposit": null,
+            "balance": 29381.94
+        },
+        {
+            "date": "Jul 21",
+            "description": "EFT Withdrawal - Intact Insurance Business Premium",
+            "withdrawal": 412.87,
+            "deposit": null,
+            "balance": 28969.07
+        },
+        {
+            "date": "Jul 23",
+            "description": "Interac e-Transfer received from Mississauga Trade Hub",
+            "withdrawal": null,
+            "deposit": 1450.00,
+            "balance": 30419.07
+        },
+        {
+            "date": "Jul 24",
+            "description": "Transfer from 400013117 to 103635047",
+            "withdrawal": 500.00,
+            "deposit": null,
+            "balance": 29919.07
+        },
+        {
+            "date": "Jul 26",
+            "description": "Interac e-Transfer received from Markham Enterprises",
+            "withdrawal": null,
+            "deposit": 2100.45,
+            "balance": 32019.52
+        },
+        {
+            "date": "Jul 27",
+            "description": "Purchase - Toronto Legal Services (EFT)",
+            "withdrawal": 1240.21,
+            "deposit": null,
+            "balance": 30779.31
+        },
+        {
+            "date": "Jul 28",
+            "description": "Interac e-Transfer sent to Ajax Storage Ltd",
+            "withdrawal": 185.66,
+            "deposit": null,
+            "balance": 30593.65
+        },
+        {
+            "date": "Jul 29",
+            "description": "Internal Transfer - Monthly Tax Reserve",
+            "withdrawal": 450.00,
+            "deposit": null,
+            "balance": 30143.65
+        },
+        {
+            "date": "Jul 30",
+            "description": "Interac e-Transfer received from Hamilton Partners",
+            "withdrawal": null,
+            "deposit": 655.12,
+            "balance": 30798.77
+        },
+        {
+            "date": "Jul 31",
+            "description": "EFT Withdrawal - CRA GST/HST Remittance",
+            "withdrawal": 842.00,
+            "deposit": null,
+            "balance": 29956.77
+        },
+        {
+            "date": "Jul 31",
+            "description": "Interac e-Transfer sent to Burlington Supplies",
+            "withdrawal": 321.44,
+            "deposit": null,
+            "balance": 29635.33
+        },
+        {
+            "date": "Jul 31",
+            "description": "Interac e-Transfer cancelled - Burlington Supplies",
+            "withdrawal": null,
+            "deposit": 321.44,
+            "balance": 29956.77
+        },
+        {
+            "date": "Aug 01",
+            "description": "Interest Earned",
+            "withdrawal": null,
+            "deposit": 14.28,
+            "balance": 29971.05
+        }
+    ]
+}
